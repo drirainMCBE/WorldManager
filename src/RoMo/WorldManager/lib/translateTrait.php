@@ -16,10 +16,10 @@ trait translateTrait{
 
         while(($read = readdir($dir))){
             if($read != "." && $read != ".."){
-                if(!file_exists($dataPath . "/" . $read)){
+                //if(!file_exists($dataPath . "/" . $read)){
                     $messageFile = $resourcePath . "/" . $read;
                     copy($messageFile, $dataPath . "/" . $read);
-                }
+                //}
             }
         }
 
