@@ -58,4 +58,50 @@ class WorldSetting{
     public function getWorld() : World{
         return $this->world;
     }
+
+    public function getGamemode() : int{
+        return $this->gamemode;
+    }
+
+    public function getBlockPlaceAllow() : bool{
+        return $this->isBlockPlaceAllow;
+    }
+
+    public function getBlockBreakAllow() : bool{
+        return $this->isBlockBreakAllow;
+    }
+
+    public function getPvpAllow() : bool{
+        return $this->isPvpAllow;
+    }
+
+    public function getLeavesDecayAllow() : bool{
+        return $this->isLeavesDecayAllow;
+    }
+
+    public function setGamemode(int $gamemode) : void{
+        if($gamemode < 0){
+            $gamemode = 0;
+        }
+        if($gamemode > 2){
+            $gamemode = 2;
+        }
+        $this->gamemode = $gamemode;
+    }
+
+    public function setBlockPlaceAllow(bool $isBlockPlaceAllow) : void{
+        $this->isBlockPlaceAllow = $isBlockPlaceAllow;
+    }
+
+    public function setBlockBreakAllow(bool $isBlockBreakAllow) : void{
+        $this->isBlockBreakAllow = $isBlockBreakAllow;
+    }
+
+    public function setPvpAllow(bool $isPvpAllow) : void{
+        $this->isPvpAllow = $isPvpAllow;
+    }
+
+    public function setLeavesDecayAllow(bool $isLeavesDecayAllow) : void{
+        $this->isLeavesDecayAllow = $isLeavesDecayAllow;
+    }
 }
