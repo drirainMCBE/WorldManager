@@ -9,6 +9,12 @@ class WorldSettingFactory{
 
     use SingletonTrait;
 
+    public const GAMEMODE = "gamemode";
+    public const BLOCK_PLACE = "block_place";
+    public const BLOCK_BREAK = "block_break";
+    public const PVP = "pvp";
+    public const LEAVES_DECAY = "leaves_decay";
+
     /** @var WorldSetting[] */
     protected array $worldSettings = [];
 
