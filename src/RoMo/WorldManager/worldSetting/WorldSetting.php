@@ -24,7 +24,7 @@ class WorldSetting{
 
     public function __construct(World $world){
         $this->world = $world;
-        $this->path = Server::getInstance()->getDataPath() . "world/" . $this->world->getFolderName() . "/setting.json";
+        $this->path = Server::getInstance()->getDataPath() . "worlds/" . $this->world->getFolderName() . "/setting.json";
 
         if(!file_exists($this->path)){
             file_put_contents($this->path, json_encode([

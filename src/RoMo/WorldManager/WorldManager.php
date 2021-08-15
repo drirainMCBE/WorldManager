@@ -20,6 +20,9 @@ class WorldManager extends PluginBase{
     public function onEnable() : void{
         self::initMessage("kor");
         WorldSettingFactory::init();
+        foreach($this->getServer()->getWorldManager()->getWorlds() as $world){
+            WorldSettingFactory::getInstance()->createWorldSetting($world);
+        }
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 }
