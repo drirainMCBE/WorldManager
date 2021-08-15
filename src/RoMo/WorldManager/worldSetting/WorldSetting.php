@@ -44,4 +44,18 @@ class WorldSetting{
         $this->isPvpAllow = $data[WorldSettingFactory::PVP];
         $this->isLeavesDecayAllow = $data[WorldSettingFactory::LEAVES_DECAY];
     }
+
+    public function onUnload(){
+        file_put_contents($this->path, json_encode([
+            WorldSettingFactory::GAMEMODE => $this->gamemode,
+            WorldSettingFactory::BLOCK_PLACE => $this->isBlockPlaceAllow,
+            WorldSettingFactory::BLOCK_BREAK => $this->isBlockBreakAllow,
+            WorldSettingFactory::PVP => $this->isPvpAllow,
+            WorldSettingFactory::LEAVES_DECAY => $this->isLeavesDecayAllow
+        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+
+    public function getWorld() : World{
+        return $this->world;
+    }
 }

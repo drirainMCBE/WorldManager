@@ -24,7 +24,30 @@ class WorldSettingFactory{
 
     private function __construct(){}
 
+    public function getWorldSetting(World $world) : ?WorldSetting{
+        if(isset($this->worldSettings[$world->getFolderName()])){
+            return $this->worldSettings[$world->getFolderName()];
+        }
+        return null;
+    }
+
     public function createWorldSetting(World $world) : WorldSetting{
-        return $this->worldSettings[] = new WorldSetting($world);
+        if(($worldSetting = $this->getWorldSetting($world)) !== null){
+            $this->closeWorldSetting($worldSetting);
+        }
+        return $this->worldSettings[$world->getFolderName()] = new WorldSetting($world);
+    }
+
+    public function closeWorldSetting(WorldSetting $worldSetting) : void{
+        $worldSetting->onUnload();
+        if(isset($this->worldSettings[$worldSetting->getWorld()->getFolderName()])){
+            unset($this->worldSettings[$worldSetting->getWorld()->getFolderName()]);
+        }
+    }
+
+    public function closeWorldSettingByWorld(World $world) : void{
+        if(($worldSetting = $this->getWorldSetting($world)) !== null){
+            $this->closeWorldSetting($worldSetting);
+        }
     }
 }
