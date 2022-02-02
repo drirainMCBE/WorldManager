@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RoMo\WorldManager\worldSetting;
 
 use pocketmine\Server;
@@ -8,32 +10,28 @@ use pocketmine\world\World;
 class WorldSetting{
 
     /** @var World */
-    protected World $world;
+    private World $world;
 
     /** @var string */
-    protected string $path;
+    private string $path;
 
     /** @var int */
-    protected int $gamemode;
+    private int $gamemode = 2;
 
     /** @var bool */
-    protected bool $isBlockPlaceAllow;
-    protected bool $isBlockBreakAllow;
-    protected bool $isPvpAllow;
-    protected bool $isLeavesDecayAllow;
+    private bool $isBlockPlaceAllow = false;
+    private bool $isBlockBreakAllow = false;
+    private bool $isPvpAllow = false;
+    private bool $isChattingAllow = true;
+    private bool $isItemDropAllow = true;
+    private bool $isLeavesDecayAllow = false;
 
     public function __construct(World $world){
         $this->world = $world;
         $this->path = Server::getInstance()->getDataPath() . "worlds/" . $this->world->getFolderName() . "/setting.json";
 
         if(!file_exists($this->path)){
-            file_put_contents($this->path, json_encode([
-                WorldSettingFactory::GAMEMODE => 2,
-                WorldSettingFactory::BLOCK_PLACE => false,
-                WorldSettingFactory::BLOCK_BREAK => false,
-                WorldSettingFactory::PVP => false,
-                WorldSettingFactory::LEAVES_DECAY => false
-            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            $this->onUnload();
         }
 
         $data = json_decode(file_get_contents($this->path), true);
@@ -42,6 +40,8 @@ class WorldSetting{
         $this->isBlockPlaceAllow = $data[WorldSettingFactory::BLOCK_PLACE];
         $this->isBlockBreakAllow = $data[WorldSettingFactory::BLOCK_BREAK];
         $this->isPvpAllow = $data[WorldSettingFactory::PVP];
+        $this->isChattingAllow = $data[WorldSettingFactory::CHATTING];
+        $this->isItemDropAllow = $data[WorldSettingFactory::ITEM_DROP];
         $this->isLeavesDecayAllow = $data[WorldSettingFactory::LEAVES_DECAY];
     }
 
@@ -51,6 +51,8 @@ class WorldSetting{
             WorldSettingFactory::BLOCK_PLACE => $this->isBlockPlaceAllow,
             WorldSettingFactory::BLOCK_BREAK => $this->isBlockBreakAllow,
             WorldSettingFactory::PVP => $this->isPvpAllow,
+            WorldSettingFactory::CHATTING => $this->isChattingAllow,
+            WorldSettingFactory::ITEM_DROP => $this->isItemDropAllow,
             WorldSettingFactory::LEAVES_DECAY => $this->isLeavesDecayAllow
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
     }
@@ -63,19 +65,19 @@ class WorldSetting{
         return $this->gamemode;
     }
 
-    public function getBlockPlaceAllow() : bool{
+    public function isBlockPlaceAllow() : bool{
         return $this->isBlockPlaceAllow;
     }
 
-    public function getBlockBreakAllow() : bool{
+    public function isBlockBreakAllow() : bool{
         return $this->isBlockBreakAllow;
     }
 
-    public function getPvpAllow() : bool{
+    public function isPvpAllow() : bool{
         return $this->isPvpAllow;
     }
 
-    public function getLeavesDecayAllow() : bool{
+    public function isLeavesDecayAllow() : bool{
         return $this->isLeavesDecayAllow;
     }
 
@@ -99,6 +101,13 @@ class WorldSetting{
 
     public function setPvpAllow(bool $isPvpAllow) : void{
         $this->isPvpAllow = $isPvpAllow;
+    }
+
+    public function setChattingAllow(bool $isChattingAllow) : void{
+        $this->isChattingAllow = $isChattingAllow;
+    }
+    public function setItemDropAllow(bool $isItemDropAllow) : void{
+        $this->isItemDropAllow = $isItemDropAllow;
     }
 
     public function setLeavesDecayAllow(bool $isLeavesDecayAllow) : void{

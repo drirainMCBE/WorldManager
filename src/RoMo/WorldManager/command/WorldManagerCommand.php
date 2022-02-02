@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RoMo\WorldManager\command;
 
 use pocketmine\command\Command;
@@ -12,7 +14,7 @@ class WorldManagerCommand extends Command{
 
     public function __construct(){
         $cmd = WorldManager::getTranslator()->getCmd("world.manager");
-        parent::__construct($cmd["name"], $cmd["description"], $cmd["usageMessage"], $cmd["aliases"]);
+        parent::__construct($cmd->getName(), $cmd->getDescription(), $cmd->getUsage(), $cmd->getAliases());
         $this->setPermission("manage-world");
     }
 

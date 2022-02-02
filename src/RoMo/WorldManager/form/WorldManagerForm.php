@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RoMo\WorldManager\form;
 
 use pocketmine\form\Form;
@@ -11,7 +13,7 @@ class WorldManagerForm implements Form{
         return [
             "type" => "form",
             "title" => WorldManager::getTranslator()->getPrefix(),
-            "content" => WorldManager::getTranslate("choose.to.do"),
+            "content" => WorldManager::getTranslator()->getTranslate("choose.to.do"),
             "buttons" => [
                 [
                     "text" => WorldManager::getTranslator()->getTranslate("create.world.button.1") . "\n" . WorldManager::getTranslator()->getTranslate("create.world.button.2")
@@ -28,6 +30,16 @@ class WorldManagerForm implements Form{
 
     public function handleResponse(Player $player, $data) : void{
         if($data === null){
+            return;
+        }
+        if($data === 0){
+            $player->sendForm(new WorldCreateForm());
+            return;
+        }
+        if($data === 1){
+            return;
+        }
+        if($data === 2){
             return;
         }
     }

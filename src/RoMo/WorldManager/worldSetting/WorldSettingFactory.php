@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+
 namespace RoMo\WorldManager\worldSetting;
 
 use pocketmine\utils\SingletonTrait;
@@ -13,6 +16,8 @@ class WorldSettingFactory{
     public const BLOCK_PLACE = "block_place";
     public const BLOCK_BREAK = "block_break";
     public const PVP = "pvp";
+    public const CHATTING = "chatting";
+    public const ITEM_DROP = "item_drop";
     public const LEAVES_DECAY = "leaves_decay";
 
     /** @var WorldSetting[] */
