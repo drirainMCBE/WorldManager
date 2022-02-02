@@ -21,13 +21,11 @@ class WorldSettingFactory{
     public const LEAVES_DECAY = "leaves_decay";
 
     /** @var WorldSetting[] */
-    protected array $worldSettings = [];
+    private array $worldSettings = [];
 
     public static function init(){
         self::$instance = new self();
     }
-
-    private function __construct(){}
 
     public function getWorldSetting(World $world) : ?WorldSetting{
         if(isset($this->worldSettings[$world->getFolderName()])){

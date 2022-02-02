@@ -7,4 +7,4 @@ api:
 
 permissions:
   manage-world:
-    default: OP
+    default: op
