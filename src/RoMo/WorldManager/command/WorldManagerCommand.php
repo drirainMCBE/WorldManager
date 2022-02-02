@@ -11,7 +11,7 @@ use RoMo\WorldManager\WorldManager;
 class WorldManagerCommand extends Command{
 
     public function __construct(){
-        $cmd = WorldManager::getCmd("world.manager");
+        $cmd = WorldManager::getTranslator()->getCmd("world.manager");
         parent::__construct($cmd["name"], $cmd["description"], $cmd["usageMessage"], $cmd["aliases"]);
         $this->setPermission("manage-world");
     }
@@ -21,7 +21,7 @@ class WorldManagerCommand extends Command{
             return;
         }
         if(!$sender instanceof Player){
-            $sender->sendMessage(WorldManager::getMessage("must.do.in.game"));
+            $sender->sendMessage(WorldManager::getTranslator()->getMessage("must.do.in.game"));
             return;
         }
         $sender->sendForm(new WorldManagerForm());

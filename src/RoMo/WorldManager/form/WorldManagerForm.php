@@ -10,17 +10,17 @@ class WorldManagerForm implements Form{
     public function jsonSerialize() : array{
         return [
             "type" => "form",
-            "title" => WorldManager::getPrefix(),
+            "title" => WorldManager::getTranslator()->getPrefix(),
             "content" => WorldManager::getTranslate("choose.to.do"),
             "buttons" => [
                 [
-                    "text" => WorldManager::getTranslate("create.world.button.1") . "\n" . WorldManager::getTranslate("create.world.button.2")
+                    "text" => WorldManager::getTranslator()->getTranslate("create.world.button.1") . "\n" . WorldManager::getTranslator()->getTranslate("create.world.button.2")
                 ],
                 [
-                    "text" => WorldManager::getTranslate("warp.to.world.button.1") . "\n" . WorldManager::getTranslate("warp.to.world.button.2")
+                    "text" => WorldManager::getTranslator()->getTranslate("warp.to.world.button.1") . "\n" . WorldManager::getTranslator()->getTranslate("warp.to.world.button.2")
                 ],
                 [
-                    "text" => WorldManager::getTranslate("setting.world.button.1") . "\n" . WorldManager::getTranslate("setting.world.button.2")
+                    "text" =>WorldManager::getTranslator()->getTranslate("setting.world.button.1") . "\n" . WorldManager::getTranslator()->getTranslate("setting.world.button.2")
                 ]
             ]
         ];
