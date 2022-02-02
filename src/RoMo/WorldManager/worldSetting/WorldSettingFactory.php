@@ -53,4 +53,10 @@ class WorldSettingFactory{
             $this->closeWorldSetting($worldSetting);
         }
     }
+
+    public function shutdown() : void{
+        foreach($this->worldSettings as $worldSetting){
+            $this->closeWorldSetting($worldSetting);
+        }
+    }
 }
