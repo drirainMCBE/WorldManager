@@ -37,7 +37,7 @@ class WorldManagerForm implements Form{
             return;
         }
         if($data === 1){
-            $player->sendForm(new WorldManagerForm());
+            $player->sendForm(new WorldWarpForm());
             return;
         }
         if($data === 2){
