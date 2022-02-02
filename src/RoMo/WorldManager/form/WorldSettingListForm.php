@@ -9,8 +9,9 @@ use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\world\World;
 use RoMo\WorldManager\WorldManager;
+use RoMo\WorldManager\worldSetting\WorldSettingFactory;
 
-class WorldWarpForm implements Form{
+class WorldSettingListForm implements Form{
 
     /** @var World[] */
     private array $worldsForButton = [];
@@ -19,7 +20,7 @@ class WorldWarpForm implements Form{
         $buttons = [];
         foreach(Server::getInstance()->getWorldManager()->getWorlds() as $world){
             $this->worldsForButton[] = $world;
-            $buttons[] = ["text" => WorldManager::getTranslator()->getTranslate("world.name.list.button", [$world->getFolderName()]) . "\n" . WorldManager::getTranslator()->getTranslate("world.warp.button")];
+            $buttons[] = ["text" => WorldManager::getTranslator()->getTranslate("world.name.list.button", [$world->getFolderName()]) . "\n" . WorldManager::getTranslator()->getTranslate("world.setting.button")];
         }
         return [
             "title" => WorldManager::getTranslator()->getTranslate("form.title"),
@@ -28,12 +29,16 @@ class WorldWarpForm implements Form{
             "buttons" => $buttons
         ];
     }
+
     public function handleResponse(Player $player, $data) : void{
         if($data === null){
             return;
         }
         $world = $this->worldsForButton[$data];
-        $player->teleport($world->getSafeSpawn());
-        $player->sendMessage(WorldManager::getTranslator()->getMessage("warp.world" , [$world->getFolderName()]));
+        $worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world);
+        if($worldSetting === null){
+            $worldSetting = WorldSettingFactory::getInstance()->createWorldSetting($world);
+        }
+        $player->sendForm(new WorldSettingForm($worldSetting));
     }
 }

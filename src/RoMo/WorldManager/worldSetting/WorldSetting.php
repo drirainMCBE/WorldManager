@@ -77,6 +77,14 @@ class WorldSetting{
         return $this->isPvpAllow;
     }
 
+    public function isChattingAllow() : bool{
+        return $this->isChattingAllow;
+    }
+
+    public function isItemDropAllow() : bool{
+        return $this->isItemDropAllow;
+    }
+
     public function isLeavesDecayAllow() : bool{
         return $this->isLeavesDecayAllow;
     }

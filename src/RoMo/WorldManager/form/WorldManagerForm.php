@@ -41,6 +41,7 @@ class WorldManagerForm implements Form{
             return;
         }
         if($data === 2){
+            $player->sendForm(new WorldSettingListForm());
             return;
         }
     }
