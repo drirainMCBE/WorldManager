@@ -31,6 +31,10 @@ class WorldCreateForm implements Form{
                         WorldManager::getTranslator()->getTranslate("world.generator.flat"),
                         WorldManager::getTranslator()->getTranslate("world.generator.nether")
                     ]
+                ],
+                [
+                    "type" => "input",
+                    "text" => WorldManager::getTranslator()->getTranslate("world.preset")
                 ]
             ]
         ];
@@ -56,6 +60,9 @@ class WorldCreateForm implements Form{
         };
         $worldCreationOptions = new WorldCreationOptions();
         $worldCreationOptions->setGeneratorClass($generator);
+        if(isset($data[2]) && $data[2] != ""){
+            $worldCreationOptions->setGeneratorOptions((string) $data[2]);
+        }
         $worldManager->generateWorld($data[0], $worldCreationOptions);
         $player->sendMessage($translator->getMessage("create.world", [$data[0]]));
     }
