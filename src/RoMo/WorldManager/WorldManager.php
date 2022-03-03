@@ -18,6 +18,9 @@ class WorldManager extends PluginBase{
 
     public function onLoad() : void{
         self::$instance = $this;
+        foreach(array_diff(scandir(Path::join($this->getServer()->getDataPath(), "worlds")), ["..", ".", "islands"]) as $worldName){
+            $this->getServer()->getWorldManager()->loadWorld($worldName);
+        }
     }
 
     public function onEnable() : void{
@@ -28,10 +31,6 @@ class WorldManager extends PluginBase{
         }
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
         $this->getServer()->getCommandMap()->register("worldManager", new WorldManagerCommand());
-
-        foreach(array_diff(scandir(Path::join($this->getServer()->getDataPath(), "worlds")), ["..", ".", "islands"]) as $worldName){
-            $this->getServer()->getWorldManager()->loadWorld($worldName);
-        }
     }
 
     public function onDisable() : void{
