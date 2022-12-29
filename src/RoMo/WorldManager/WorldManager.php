@@ -19,7 +19,7 @@ class WorldManager extends PluginBase{
     public function onLoad() : void{
         self::$instance = $this;
         foreach(array_diff(scandir(Path::join($this->getServer()->getDataPath(), "worlds")), ["..", ".", "islands"]) as $worldName){
-            $this->getServer()->getWorldManager()->loadWorld($worldName);
+            $this->getServer()->getWorldManager()->loadWorld($worldName, true);
         }
     }
 
