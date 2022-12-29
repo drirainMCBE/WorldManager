@@ -3,7 +3,7 @@ main: RoMo\WorldManager\WorldManager
 author: RoMo_Official
 version: 1.2.0
 api:
-  - 4.0.0
+  - 5.0.0
 
 permissions:
   manage-world:

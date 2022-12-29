@@ -9,7 +9,7 @@ use RoMo\Translator\TranslatorHolderTrait;
 use RoMo\WorldManager\command\WorldManagerCommand;
 use RoMo\WorldManager\listener\EventListener;
 use RoMo\WorldManager\worldSetting\WorldSettingFactory;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class WorldManager extends PluginBase{
 
