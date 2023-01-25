@@ -34,6 +34,10 @@ class WorldCreateForm implements Form{
                 ],
                 [
                     "type" => "input",
+                    "text" => WorldManager::getTranslator()->getTranslate("world.seed")
+                ],
+                [
+                    "type" => "input",
                     "text" => WorldManager::getTranslator()->getTranslate("world.preset")
                 ]
             ]
@@ -60,8 +64,11 @@ class WorldCreateForm implements Form{
         };
         $worldCreationOptions = new WorldCreationOptions();
         $worldCreationOptions->setGeneratorClass($generator);
-        if(isset($data[2]) && $data[2] != ""){
-            $worldCreationOptions->setGeneratorOptions((string) $data[2]);
+        if(isset($data[2]) && $data[2] != "" && !is_numeric($data[2])){
+            $worldCreationOptions->setSeed((int) $data[2]);
+        }
+        if(isset($data[3]) && $data[3] != ""){
+            $worldCreationOptions->setGeneratorOptions((string) $data[3]);
         }
         $worldManager->generateWorld($data[0], $worldCreationOptions);
         $player->sendMessage($translator->getMessage("create.world", [$data[0]]));
