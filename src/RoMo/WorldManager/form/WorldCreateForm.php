@@ -11,6 +11,7 @@ use pocketmine\world\generator\Flat;
 use pocketmine\world\generator\hell\Nether;
 use pocketmine\world\generator\normal\Normal;
 use pocketmine\world\WorldCreationOptions;
+use RoMo\WorldManager\generator\VoidGenerator;
 use RoMo\WorldManager\WorldManager;
 
 class WorldCreateForm implements Form{
@@ -29,7 +30,8 @@ class WorldCreateForm implements Form{
                     "options" => [
                         WorldManager::getTranslator()->getTranslate("world.generator.normal"),
                         WorldManager::getTranslator()->getTranslate("world.generator.flat"),
-                        WorldManager::getTranslator()->getTranslate("world.generator.nether")
+                        WorldManager::getTranslator()->getTranslate("world.generator.nether"),
+                        WorldManager::getTranslator()->getTranslate("world.generator.void")
                     ]
                 ],
                 [
@@ -60,7 +62,8 @@ class WorldCreateForm implements Form{
         $generator = match ($data[1]){
             0 => Normal::class,
             1 => Flat::class,
-            2 => Nether::class
+            2 => Nether::class,
+            3 => VoidGenerator::class
         };
         $worldCreationOptions = new WorldCreationOptions();
         $worldCreationOptions->setGeneratorClass($generator);
