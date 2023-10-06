@@ -46,6 +46,11 @@ class WorldSettingForm implements Form{
                 ],
                 [
                     "type" => "toggle",
+                    "text" => WorldManager::getTranslator()->getTranslate("setting.interact"),
+                    "default" => $this->worldSetting->isInteractAllow()
+                ],
+                [
+                    "type" => "toggle",
                     "text" => WorldManager::getTranslator()->getTranslate("setting.pvp"),
                     "default" => $this->worldSetting->isPvpAllow()
                 ],
@@ -77,10 +82,11 @@ class WorldSettingForm implements Form{
         });
         $this->worldSetting->setBlockPlaceAllow($data[1]);
         $this->worldSetting->setBlockBreakAllow($data[2]);
-        $this->worldSetting->setPvpAllow($data[3]);
-        $this->worldSetting->setChattingAllow($data[4]);
-        $this->worldSetting->setItemDropAllow($data[5]);
-        $this->worldSetting->setLeavesDecayAllow($data[6]);
+        $this->worldSetting->setIsInteractAllow($data[3]);
+        $this->worldSetting->setPvpAllow($data[4]);
+        $this->worldSetting->setChattingAllow($data[5]);
+        $this->worldSetting->setItemDropAllow($data[6]);
+        $this->worldSetting->setLeavesDecayAllow($data[7]);
         $player->sendMessage(WorldManager::getTranslator()->getMessage("setting.world", [$this->worldSetting->getWorld()->getFolderName()]));
     }
 }

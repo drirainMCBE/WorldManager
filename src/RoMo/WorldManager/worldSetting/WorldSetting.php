@@ -21,6 +21,7 @@ class WorldSetting{
     /** @var bool */
     private bool $isBlockPlaceAllow = false;
     private bool $isBlockBreakAllow = false;
+    private bool $isInteractAllow = false;
     private bool $isPvpAllow = false;
     private bool $isChattingAllow = true;
     private bool $isItemDropAllow = true;
@@ -36,13 +37,14 @@ class WorldSetting{
 
         $data = json_decode(file_get_contents($this->path), true);
 
-        $this->gamemode = $data[WorldSettingFactory::GAMEMODE];
-        $this->isBlockPlaceAllow = $data[WorldSettingFactory::BLOCK_PLACE];
-        $this->isBlockBreakAllow = $data[WorldSettingFactory::BLOCK_BREAK];
-        $this->isPvpAllow = $data[WorldSettingFactory::PVP];
-        $this->isChattingAllow = $data[WorldSettingFactory::CHATTING];
-        $this->isItemDropAllow = $data[WorldSettingFactory::ITEM_DROP];
-        $this->isLeavesDecayAllow = $data[WorldSettingFactory::LEAVES_DECAY];
+        $this->gamemode = $data[WorldSettingFactory::GAMEMODE] ?? 2;
+        $this->isBlockPlaceAllow = $data[WorldSettingFactory::BLOCK_PLACE] ?? false;
+        $this->isBlockBreakAllow = $data[WorldSettingFactory::BLOCK_BREAK] ?? false;
+        $this->isInteractAllow = $data[WorldSettingFactory::INTERACT] ?? false;
+        $this->isPvpAllow = $data[WorldSettingFactory::PVP] ?? false;
+        $this->isChattingAllow = $data[WorldSettingFactory::CHATTING] ?? true;
+        $this->isItemDropAllow = $data[WorldSettingFactory::ITEM_DROP] ?? true;
+        $this->isLeavesDecayAllow = $data[WorldSettingFactory::LEAVES_DECAY] ?? false;
     }
 
     public function onUnload(){
@@ -50,6 +52,7 @@ class WorldSetting{
             WorldSettingFactory::GAMEMODE => $this->gamemode,
             WorldSettingFactory::BLOCK_PLACE => $this->isBlockPlaceAllow,
             WorldSettingFactory::BLOCK_BREAK => $this->isBlockBreakAllow,
+            WorldSettingFactory::INTERACT => $this->isInteractAllow,
             WorldSettingFactory::PVP => $this->isPvpAllow,
             WorldSettingFactory::CHATTING => $this->isChattingAllow,
             WorldSettingFactory::ITEM_DROP => $this->isItemDropAllow,
@@ -71,6 +74,10 @@ class WorldSetting{
 
     public function isBlockBreakAllow() : bool{
         return $this->isBlockBreakAllow;
+    }
+
+    public function isInteractAllow() : bool{
+        return $this->isInteractAllow;
     }
 
     public function isPvpAllow() : bool{
@@ -105,6 +112,10 @@ class WorldSetting{
 
     public function setBlockBreakAllow(bool $isBlockBreakAllow) : void{
         $this->isBlockBreakAllow = $isBlockBreakAllow;
+    }
+
+    public function setIsInteractAllow(bool $isInteractAllow) : void{
+        $this->isInteractAllow = $isInteractAllow;
     }
 
     public function setPvpAllow(bool $isPvpAllow) : void{

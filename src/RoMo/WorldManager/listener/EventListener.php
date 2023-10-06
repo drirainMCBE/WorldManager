@@ -12,6 +12,7 @@ use pocketmine\event\entity\EntityTeleportEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
+use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\world\WorldLoadEvent;
 use pocketmine\event\world\WorldUnloadEvent;
@@ -22,9 +23,15 @@ use RoMo\WorldManager\worldSetting\WorldSettingFactory;
 
 class EventListener implements Listener{
     public function onLoadWorld(WorldLoadEvent $event) : void{
+        if(str_contains($event->getWorld()->getFolderName(), "islands/")){
+            return;
+        }
         WorldSettingFactory::getInstance()->createWorldSetting($event->getWorld());
     }
     public function onUnloadWorld(WorldUnloadEvent $event) : void{
+        if(str_contains($event->getWorld()->getFolderName(), "islands/")){
+            return;
+        }
         WorldSettingFactory::getInstance()->closeWorldSettingByWorld($event->getWorld());
     }
 
@@ -34,7 +41,7 @@ class EventListener implements Listener{
         }
         $world = $player->getWorld();
         if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
-            $worldSetting = WorldSettingFactory::getInstance()->createWorldSetting($world);
+            return;
         }
         $player->setGamemode(GameMode::fromString((string) $worldSetting->getGamemode()));
     }
@@ -56,7 +63,7 @@ class EventListener implements Listener{
         }
         $world = $player->getWorld();
         if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
-            $worldSetting = WorldSettingFactory::getInstance()->createWorldSetting($world);
+            return;
         }
         if(!$worldSetting->isBlockPlaceAllow()){
             $event->cancel();
@@ -70,7 +77,7 @@ class EventListener implements Listener{
         }
         $world = $player->getWorld();
         if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
-            $worldSetting = WorldSettingFactory::getInstance()->createWorldSetting($world);
+            return;
         }
         if(!$worldSetting->isBlockBreakAllow()){
             $event->cancel();
@@ -82,12 +89,15 @@ class EventListener implements Listener{
         if(!$player instanceof Player){
             return;
         }
+        if(!$event->getEntity() instanceof Player){
+            return;
+        }
         if($player->hasPermission("manage-world")){
             return;
         }
         $world = $player->getWorld();
         if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
-            $worldSetting = WorldSettingFactory::getInstance()->createWorldSetting($world);
+            return;
         }
         if(!$worldSetting->isPvpAllow()){
             $event->cancel();
@@ -101,7 +111,7 @@ class EventListener implements Listener{
         }
         $world = $player->getWorld();
         if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
-            $worldSetting = WorldSettingFactory::getInstance()->createWorldSetting($world);
+            return;
         }
 
         if(!$worldSetting->isChattingAllow()){
@@ -117,7 +127,7 @@ class EventListener implements Listener{
         }
         $world = $player->getWorld();
         if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
-            $worldSetting = WorldSettingFactory::getInstance()->createWorldSetting($world);
+            return;
         }
         if(!$worldSetting->isItemDropAllow()){
             $event->cancel();
@@ -128,9 +138,19 @@ class EventListener implements Listener{
     public function onLeavesDecay(LeavesDecayEvent $event) : void{
         $world = $event->getBlock()->getPosition()->getWorld();
         if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
-            $worldSetting = WorldSettingFactory::getInstance()->createWorldSetting($world);
+            return;
         }
         if(!$worldSetting->isLeavesDecayAllow()){
+            $event->cancel();
+        }
+    }
+
+    public function onInteract(PlayerInteractEvent $event) : void{
+        $world = $event->getBlock()->getPosition()->getWorld();
+        if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
+            return;
+        }
+        if(!$worldSetting->isInteractAllow()){
             $event->cancel();
         }
     }
