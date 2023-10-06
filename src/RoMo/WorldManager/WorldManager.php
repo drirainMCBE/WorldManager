@@ -20,15 +20,16 @@ class WorldManager extends PluginBase{
 
     public function onLoad() : void{
         self::$instance = $this;
-        GeneratorManager::getInstance()->addGenerator(VoidGenerator::class, "void", fn() => null, true);
-        foreach(array_diff(scandir(Path::join($this->getServer()->getDataPath(), "worlds")), ["..", ".", "islands/"]) as $worldName){
-            $this->getServer()->getWorldManager()->loadWorld($worldName, true);
-        }
+
     }
 
     public function onEnable() : void{
         $this->setTranslator(new Translator($this, $this->getFile(), $this->getDataFolder(), "kor"));
+        GeneratorManager::getInstance()->addGenerator(VoidGenerator::class, "void", fn() => null, true);
         WorldSettingFactory::init();
+        foreach(array_diff(scandir(Path::join($this->getServer()->getDataPath(), "worlds")), ["..", ".", "islands/"]) as $worldName){
+            $this->getServer()->getWorldManager()->loadWorld($worldName, true);
+        }
         foreach($this->getServer()->getWorldManager()->getWorlds() as $world){
             WorldSettingFactory::getInstance()->createWorldSetting($world);
         }
