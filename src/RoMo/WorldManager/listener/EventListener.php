@@ -146,6 +146,10 @@ class EventListener implements Listener{
     }
 
     public function onInteract(PlayerInteractEvent $event) : void{
+        if($event->getPlayer()->hasPermission("manage-world")){
+            return;
+        }
+
         $world = $event->getBlock()->getPosition()->getWorld();
         if(($worldSetting = WorldSettingFactory::getInstance()->getWorldSetting($world)) === null){
             return;
