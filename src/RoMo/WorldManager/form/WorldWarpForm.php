@@ -33,7 +33,7 @@ class WorldWarpForm implements Form{
             return;
         }
         $world = $this->worldsForButton[$data];
-        $player->teleport($world->getSafeSpawn());
+        $player->teleport($world->getSpawnLocation());
         $player->sendMessage(WorldManager::getTranslator()->getMessage("warp.world" , [$world->getFolderName()]));
     }
 }
