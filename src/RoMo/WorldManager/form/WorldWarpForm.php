@@ -8,6 +8,7 @@ use pocketmine\form\Form;
 use pocketmine\player\Player;
 use pocketmine\Server;
 use pocketmine\world\World;
+use pocketmine\world\WorldException;
 use RoMo\WorldManager\WorldManager;
 
 class WorldWarpForm implements Form{
@@ -33,7 +34,12 @@ class WorldWarpForm implements Form{
             return;
         }
         $world = $this->worldsForButton[$data];
-        $player->teleport($world->getSpawnLocation());
+        try{
+            $player->teleport($world->getSpawnLocation());
+        }catch(WorldException $exception){
+            $player->sendMessage($exception->getMessage());
+        }
+
         $player->sendMessage(WorldManager::getTranslator()->getMessage("warp.world" , [$world->getFolderName()]));
     }
 }
