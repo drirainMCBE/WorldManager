@@ -1,7 +1,8 @@
 name: WorldManager
 main: RoMo\WorldManager\WorldManager
 author: RoMo_Official
-version: 1.3.3
+version: 1.3.4
+load: startup
 api:
   - 5.0.0
 
